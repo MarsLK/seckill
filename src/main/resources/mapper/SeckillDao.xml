@@ -1,0 +1,49 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.seckill.dao.SeckillDao">
+    <!--目的:为dao接口方法提供sql语句配置
+   即针对dao接口中的方法编写我们的sql语句
+   使用mybatis 时我们sql是写在xml 映射文件中，如果写的sql中有一些特殊的字符的话
+   在解析xml文件的时候会被转义，但我们不希望他被转义，所以我们要使用<![CDATA[ ]]>来解决
+   <![CDATA[    ]]> 夹住代码
+   -->
+
+    <!--减库存-->
+    <update id="reduceNumber">
+        UPDATE seckill
+        SET number = number-1
+        WHERE seckill_id = #{seckillId}
+        AND start_time <![CDATA[ <= ]]> #{killTime}
+        AND end_time >= #{killTime}
+        AND number > 0;
+    </update>
+
+    <!--根据id查询秒杀的商品信息-->
+    <select id="queryById" resultType="Seckill" parameterType="long">
+        SELECT *
+        FROM seckill
+        WHERE seckill_id = #{seckillId}
+    </select>
+
+    <!--根据偏移量查询秒杀商品列表
+    List<Seckill> queryAll(int off, int limit);
+    parameterType为多个可以不给
+    按照降序对记录进行排序，可以使用 DESC 关键字-->
+    <select id="queryAll" resultType="Seckill">
+        SELECT *
+        FROM seckill
+        ORDER BY create_time DESC
+        limit #{offset},#{limit}
+    </select>
+    <!--mybait调用存储过程-->
+    <select id="killByProcedure" statementType="CALLABLE">
+        call execute_seckill (
+        #{seckillId, jdbcType = BIGINT, mode = IN },
+        #{phone, jdbcType = BIGINT, mode = IN },
+        #{killTime, jdbcType = TIMESTAMP, mode = IN },
+        #{result, jdbcType = INTEGER, mode = OUT }
+        )
+    </select>
+</mapper>
