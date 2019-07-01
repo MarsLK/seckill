@@ -17,4 +17,4 @@ IntelliJ IDEA 2017.3.1 x64、5.5.49 MySQL Community Server、apache-tomcat-7.0.5
 该项目的侧重点主要就是秒杀这个功能，并对其做了高并发方面的优化，后台个人独立搭建。其中系统后台基于SSM（Spring+SpringMVC+Mybatis）框架，前端基于Bootstrap框架，利用JavaScript模块化，主要完成模拟秒杀的三大功能，即订单详情页以及秒杀接口暴露和执行秒杀功能。对于实现基本功能的基础上再对系统进行优化。
 ## 项目优化： 
 前端静态页面采用CDN缓存，实现动静态数据分离，秒杀按钮做防重复处理，在秒杀未开启的时候需要暴露秒杀地址的接口，使用redis进行缓存，在秒杀操作开启之后，利用行级锁在提交之后释放，减少行级锁持有时间，对于更新库存操作，把客户逻辑利用存储过程放到MySQL服务端，避免网络延迟和GC影响等。
-## 项目地址：[项目地址](https://github.com/MarsLK/seckill)    
+## 项目地址：[Java高并发之模拟产品秒杀以及优化系统 ](https://github.com/MarsLK/seckill)    
