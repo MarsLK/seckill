@@ -21,4 +21,4 @@ Spring MVC:1.Restful接口设计和使用。Restful现在更多的被应用在�
 
 项目优化：前端静态页面采用CDN缓存，实现动静态数据分离，秒杀按钮做防重复处理，在秒杀未开启的时候需要暴露秒杀地址的接口，使用redis进行缓存，在秒杀操作开启之后，利用行级锁在提交之后释放，减少行级锁持有时间，对于更新库存操作，把客户逻辑利用存储过程放到MySQL服务端，避免网络延迟和GC影响等。
 
-项目地址：https://github.com/Ethanim/seckill
+项目地址：https://github.com/MarsLK/seckill
